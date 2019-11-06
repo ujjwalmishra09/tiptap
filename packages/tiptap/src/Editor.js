@@ -21,6 +21,7 @@ import {
   minMax,
 } from './Utils'
 import { Doc, Paragraph, Text } from './Nodes'
+import MenuBubble from './Plugins/MenuBubble'
 import css from './style.css'
 
 export default class Editor extends Emitter {
@@ -44,6 +45,7 @@ export default class Editor extends Emitter {
       useBuiltInExtensions: true,
       disableInputRules: false,
       disablePasteRules: false,
+      menuBubble: {},
       dropCursor: {},
       parseOptions: {},
       injectCSS: true,
@@ -76,7 +78,7 @@ export default class Editor extends Emitter {
     })
     this.focused = false
     this.selection = { from: 0, to: 0 }
-    this.element = document.createElement('div')
+    this.element = this.options.element || document.createElement('div')
     this.extensions = this.createExtensions()
     this.nodes = this.createNodes()
     this.marks = this.createMarks()
@@ -88,6 +90,7 @@ export default class Editor extends Emitter {
     this.view = this.createView()
     this.commands = this.createCommands()
     this.setActiveNodesAndMarks()
+    this.setMenuBubble()
 
     if (this.options.injectCSS) {
       injectCSS(css)
@@ -283,6 +286,15 @@ export default class Editor extends Emitter {
       handleDrop: (...args) => { this.emit('drop', ...args) },
       dispatchTransaction: this.dispatchTransaction.bind(this),
     })
+  }
+
+  setMenuBubble() {
+    if (this.options.menuBubble.element) {
+      this.registerPlugin(MenuBubble({
+        editor: this,
+        ...this.options.menuBubble
+      }))
+    }
   }
 
   setParentComponent(component = null) {

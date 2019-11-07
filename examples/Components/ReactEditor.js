@@ -29,8 +29,8 @@ export default class ReactEditor extends Component {
   }
 
   componentDidMount() {
-    const { onUpdate, placeholder } = this.props
-    
+    const { onUpdate, placeholder, content } = this.props
+
     this.editor = new Editor({
       extensions: [
         new Heading({ levels: [4] }),
@@ -46,6 +46,7 @@ export default class ReactEditor extends Component {
           showOnlyWhenEditable: true,
         })
       ],
+      content: content || '',
       element: this.contentRef.current,
       menuBubble: {
         element: this.menuBubbleRef.current,

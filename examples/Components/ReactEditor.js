@@ -49,6 +49,9 @@ export default class ReactEditor extends Component {
         element: this.menuBubbleRef.current,
         keepInBounds: true,
         onUpdate: menu => this.setState({menu})
+      },
+      onUpdate: () => {
+        if (this.props.onUpdate) this.props.onUpdate()
       }
     })
     this.setState({ isEditorRedy: true })
@@ -66,7 +69,7 @@ export default class ReactEditor extends Component {
     const { menu } = this.state
 
     return {
-      menububble: `menububble${menu.isActive ? ' is-active' : ''}`
+      menububble: `menububble${ menu.isActive ? ' is-active' : '' }`
     }
   }
 
@@ -76,7 +79,7 @@ export default class ReactEditor extends Component {
     const { isEditorRedy } = this.state
 
     return (
-      <>
+      <div className="tiptap__editor">
         <div
           ref={this.menuBubbleRef}
           className={classNames.menububble}
@@ -84,8 +87,8 @@ export default class ReactEditor extends Component {
         >
           {isEditorRedy && <EditorMenuBubble getEditor={()=>this.editor}/>}
         </div>
-        <div ref={this.contentRef} className="editor__content"></div>
-      </>
+        <div ref={this.contentRef} className="tiptap__editor__content"></div>
+      </div>
     )
   }
 }

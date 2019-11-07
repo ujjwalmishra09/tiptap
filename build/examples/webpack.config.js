@@ -17,17 +17,21 @@ export default {
   mode: ifDev('development', 'production'),
 
   entry: {
-    app: removeEmpty([
+    'editor': removeEmpty([
       ifDev('webpack-hot-middleware/client?reload=true'),
       `${srcPath}/assets/sass/main.scss`,
-      `${srcPath}/main.js`,
+      `${srcPath}/Components/ReactEditor.js`,
     ]),
+    'vendor': removeEmpty([
+      ifProd('react')
+    ])
   },
 
   output: {
     path: `${buildPath}/`,
-    filename: `assets/js/[name]${ifProd('.[hash]', '')}.js`,
-    chunkFilename: `assets/js/[name]${ifProd('.[chunkhash]', '')}.js`,
+    filename: `[name].js`,
+    chunkFilename: `[name].js`,
+    libraryTarget: 'commonjs-module',
     publicPath: '/',
   },
 
@@ -35,6 +39,7 @@ export default {
     extensions: ['.js', '.scss', '.vue'],
     alias: {
       vue$: 'vue/dist/vue.esm.js',
+      react: 'react/index.js',
       modules: path.resolve(rootPath, '../node_modules'),
       images: `${srcPath}/assets/images`,
       fonts: `${srcPath}/assets/fonts`,
@@ -117,17 +122,6 @@ export default {
     ],
   },
 
-  // splitting out the vendor
-  optimization: {
-    namedModules: true,
-    splitChunks: {
-      name: 'vendor',
-      minChunks: 2,
-    },
-    noEmitOnErrors: true,
-    // concatenateModules: true,
-  },
-
   plugins: removeEmpty([
 
     // create manifest file for server-side asset manipulation
@@ -176,8 +170,8 @@ export default {
 
     // create css files
     ifProd(new MiniCssExtractPlugin({
-      filename: `assets/css/[name]${ifProd('.[hash]', '')}.css`,
-      chunkFilename: `assets/css/[name]${ifProd('.[hash]', '')}.css`,
+      filename: `[name].css`,
+      chunkFilename: `[name].css`,
     })),
 
     // minify css files

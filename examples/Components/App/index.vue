@@ -13,7 +13,6 @@
 
     <div class="page__footer">
       <a class="page__source-link" :href="$route.meta.githubUrl" target="_blank">
-        <icon name="code" />
         <span>
           Show Code
         </span>
@@ -29,7 +28,6 @@
 import Navigation from 'Components/Navigation'
 import Hero from 'Components/Hero'
 import Subnavigation from 'Components/Subnavigation'
-import Icon from 'Components/Icon'
 import Ad from 'Components/Ad'
 
 export default {
@@ -37,7 +35,6 @@ export default {
     Navigation,
     Hero,
     Subnavigation,
-    Icon,
     Ad,
   },
 }

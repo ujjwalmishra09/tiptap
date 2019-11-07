@@ -1,0 +1,12 @@
+{
+  "editor.css": "/editor.css",
+  "editor.js": "/editor.js",
+  "editor.js.map": "/editor.js.map",
+  "vendor.js": "/vendor.js",
+  "vendor.js.map": "/vendor.js.map",
+  "../dist/assets/images/favicon.38dd9b16bec8cd52b5782fa98eeff319.ico": "/../dist/assets/images/favicon.38dd9b16bec8cd52b5782fa98eeff319.ico",
+  "../dist/assets/images/favicon.ico": "/../dist/assets/images/favicon.ico",
+  "../dist/assets/images/open-graph.fcaf39966f0d862244cef728c79aa81e.png": "/../dist/assets/images/open-graph.fcaf39966f0d862244cef728c79aa81e.png",
+  "../dist/assets/images/open-graph.png": "/../dist/assets/images/open-graph.png",
+  "index.html": "/index.html"
+}

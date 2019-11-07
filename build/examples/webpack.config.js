@@ -10,7 +10,7 @@ import ImageminWebpackPlugin from 'imagemin-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin'
 import { ifDev, ifProd, removeEmpty } from './utilities'
-import { rootPath, srcPath, buildPath } from './paths'
+import { rootPath, srcPath, buildPath, editorPath } from './paths'
 
 export default {
 
@@ -28,7 +28,7 @@ export default {
   },
 
   output: {
-    path: `${buildPath}/`,
+    path: `${editorPath}/`,
     filename: `[name].js`,
     chunkFilename: `[name].js`,
     libraryTarget: 'commonjs-module',

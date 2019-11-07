@@ -1,9 +1,6 @@
 {
   "name": "tiptap-packages",
   "version": "1.0.0",
-  "workspaces": [
-    "packages/*"
-  ],
   "main": "bin/editor.js",
   "scripts": {
     "start": "node ./node_modules/@babel/node/bin/babel-node.js ./build/examples/server.js --env=development",

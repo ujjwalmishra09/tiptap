@@ -29,6 +29,8 @@ export default class ReactEditor extends Component {
   }
 
   componentDidMount() {
+    const { onUpdate, placeholder } = this.props
+    
     this.editor = new Editor({
       extensions: [
         new Heading({ levels: [4] }),
@@ -40,7 +42,7 @@ export default class ReactEditor extends Component {
         new Italic(),
         new Placeholder({
           emptyNodeClass: 'is-empty',
-          emptyNodeText: 'Write something …',
+          emptyNodeText: placeholder || 'Write something …',
           showOnlyWhenEditable: true,
         })
       ],
@@ -50,8 +52,8 @@ export default class ReactEditor extends Component {
         keepInBounds: true,
         onUpdate: menu => this.setState({menu})
       },
-      onUpdate: () => {
-        if (this.props.onUpdate) this.props.onUpdate()
+      onUpdate: (data) => {
+        if (onUpdate) onUpdate(data)
       }
     })
     this.setState({ isEditorRedy: true })

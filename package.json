@@ -1,7 +1,7 @@
 {
   "name": "tiptap",
   "version": "1.0.0",
-  "main": "bin/index.js",
+  "main": "bin/editor.js",
   "scripts": {
     "start": "node ./node_modules/@babel/node/bin/babel-node.js ./build/examples/server.js --env=development",
     "build:packages": "node ./node_modules/@babel/node/bin/babel-node.js ./build/packages/build.js",

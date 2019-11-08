@@ -18,7 +18,6 @@ var prosemirrorKeymap = require('prosemirror-keymap');
 var prosemirrorCommands = require('prosemirror-commands');
 var prosemirrorInputrules = require('prosemirror-inputrules');
 var tiptapUtils = require('tiptap-utils');
-require('vue');
 var tiptapCommands = require('tiptap-commands');
 
 function _typeof(obj) {

@@ -6,12 +6,10 @@
     */
   
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('prosemirror-state'), require('prosemirror-view'), require('prosemirror-model'), require('prosemirror-dropcursor'), require('prosemirror-gapcursor'), require('prosemirror-keymap'), require('prosemirror-commands'), require('prosemirror-inputrules'), require('tiptap-utils'), require('vue'), require('tiptap-commands')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'prosemirror-state', 'prosemirror-view', 'prosemirror-model', 'prosemirror-dropcursor', 'prosemirror-gapcursor', 'prosemirror-keymap', 'prosemirror-commands', 'prosemirror-inputrules', 'tiptap-utils', 'vue', 'tiptap-commands'], factory) :
-  (global = global || self, factory(global.tiptap = {}, global.prosemirrorState, global.prosemirrorView, global.prosemirrorModel, global.prosemirrorDropcursor, global.prosemirrorGapcursor, global.prosemirrorKeymap, global.prosemirrorCommands, global.prosemirrorInputrules, global.tiptapUtils, global.Vue, global.tiptapCommands));
-}(this, function (exports, prosemirrorState, prosemirrorView, prosemirrorModel, prosemirrorDropcursor, prosemirrorGapcursor, prosemirrorKeymap, prosemirrorCommands, prosemirrorInputrules, tiptapUtils, Vue, tiptapCommands) { 'use strict';
-
-  Vue = Vue && Vue.hasOwnProperty('default') ? Vue['default'] : Vue;
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('prosemirror-state'), require('prosemirror-view'), require('prosemirror-model'), require('prosemirror-dropcursor'), require('prosemirror-gapcursor'), require('prosemirror-keymap'), require('prosemirror-commands'), require('prosemirror-inputrules'), require('tiptap-utils'), require('tiptap-commands')) :
+  typeof define === 'function' && define.amd ? define(['exports', 'prosemirror-state', 'prosemirror-view', 'prosemirror-model', 'prosemirror-dropcursor', 'prosemirror-gapcursor', 'prosemirror-keymap', 'prosemirror-commands', 'prosemirror-inputrules', 'tiptap-utils', 'tiptap-commands'], factory) :
+  (global = global || self, factory(global.tiptap = {}, global.prosemirrorState, global.prosemirrorView, global.prosemirrorModel, global.prosemirrorDropcursor, global.prosemirrorGapcursor, global.prosemirrorKeymap, global.prosemirrorCommands, global.prosemirrorInputrules, global.tiptapUtils, global.tiptapCommands));
+}(this, function (exports, prosemirrorState, prosemirrorView, prosemirrorModel, prosemirrorDropcursor, prosemirrorGapcursor, prosemirrorKeymap, prosemirrorCommands, prosemirrorInputrules, tiptapUtils, tiptapCommands) { 'use strict';
 
   function _typeof(obj) {
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {

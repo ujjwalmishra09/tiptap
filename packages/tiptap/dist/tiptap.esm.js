@@ -15,7 +15,6 @@ import { keymap } from 'prosemirror-keymap';
 import { baseKeymap } from 'prosemirror-commands';
 import { inputRules, undoInputRule } from 'prosemirror-inputrules';
 import { getMarkAttrs, markIsActive, nodeIsActive } from 'tiptap-utils';
-import 'vue';
 import { setBlockType } from 'tiptap-commands';
 
 function _typeof(obj) {

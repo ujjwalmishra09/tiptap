@@ -1,3 +1,3 @@
-import { default as TiptapEditor } from './Components/Editor'
+import Editor from './Components/Editor'
 
-export default TiptapEditor
+export default Editor

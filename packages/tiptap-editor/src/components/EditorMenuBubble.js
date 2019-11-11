@@ -119,7 +119,7 @@ export default class EditorMenuBubble extends Component {
       )
     }
     return (
-      <div className="menububble$">
+      <>
         <button
           name='bold'
           className={classNames.bold}
@@ -163,7 +163,7 @@ export default class EditorMenuBubble extends Component {
         >
           <Icon name='link' />
         </button>
-      </div>
+      </>
     )
   }
 }

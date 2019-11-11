@@ -2,7 +2,6 @@
 node_modules
 dist/
 coverage/
-!packages/tiptap-editor/dist/
 
 # local env files
 .env.local

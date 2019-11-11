@@ -17,7 +17,6 @@ import {
   camelCase,
   Emitter,
   ExtensionManager,
-  ComponentView,
   minMax,
 } from './Utils'
 import { Doc, Paragraph, Text } from './Nodes'
@@ -76,7 +75,7 @@ export default class Editor extends Emitter {
     })
     this.focused = false
     this.selection = { from: 0, to: 0 }
-    this.element = document.createElement('div')
+    this.element = this.options.element || document.createElement('div')
     this.extensions = this.createExtensions()
     this.nodes = this.createNodes()
     this.marks = this.createMarks()
@@ -302,29 +301,30 @@ export default class Editor extends Emitter {
   }
 
   initNodeViews({ parent, extensions }) {
-    return extensions
-      .filter(extension => ['node', 'mark'].includes(extension.type))
-      .filter(extension => extension.view)
-      .reduce((nodeViews, extension) => {
-        const nodeView = (node, view, getPos, decorations) => {
-          const component = extension.view
-
-          return new ComponentView(component, {
-            editor: this,
-            extension,
-            parent,
-            node,
-            view,
-            getPos,
-            decorations,
-          })
-        }
-
-        return {
-          ...nodeViews,
-          [extension.name]: nodeView,
-        }
-      }, {})
+    // return extensions
+    //   .filter(extension => ['node', 'mark'].includes(extension.type))
+    //   .filter(extension => extension.view)
+    //   .reduce((nodeViews, extension) => {
+    //     const nodeView = (node, view, getPos, decorations) => {
+    //       const component = extension.view
+    //
+    //       return new ComponentView(component, {
+    //         editor: this,
+    //         extension,
+    //         parent,
+    //         node,
+    //         view,
+    //         getPos,
+    //         decorations,
+    //       })
+    //     }
+    //
+    //     return {
+    //       ...nodeViews,
+    //       [extension.name]: nodeView,
+    //     }
+    //   }, {})
+    return {}
   }
 
   dispatchTransaction(transaction) {

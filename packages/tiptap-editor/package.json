@@ -1,0 +1,21 @@
+{
+  "name": "tiptap-editor",
+  "version": "1.0.0",
+  "description": "Medium like editor using Tiptap",
+  "homepage": "https://tiptap.scrumpy.io",
+  "license": "MIT",
+  "main": "dist/editor.js",
+  "sideEffects": false,
+  "files": [
+    "src",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ujjwalmishra09/tiptap.git"
+  },
+  "peerDependencies": {
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0"
+  }
+}

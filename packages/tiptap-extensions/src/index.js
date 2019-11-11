@@ -13,8 +13,6 @@ export { default as Table } from './nodes/Table'
 export { default as TableHeader } from './nodes/TableHeader'
 export { default as TableCell } from './nodes/TableCell'
 export { default as TableRow } from './nodes/TableRow'
-export { default as TodoItem } from './nodes/TodoItem'
-export { default as TodoList } from './nodes/TodoList'
 
 export { default as Bold } from './marks/Bold'
 export { default as Code } from './marks/Code'

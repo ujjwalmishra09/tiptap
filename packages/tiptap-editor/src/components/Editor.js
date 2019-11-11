@@ -7,7 +7,8 @@ import {
   Italic,
   Link,
   Heading,
-  Placeholder
+  Placeholder,
+  History
 } from 'tiptap-extensions'
 import { Editor as TiptapEditor } from 'tiptap'
 
@@ -33,6 +34,7 @@ class Editor extends TiptapEditor {
 }
 
 export default class ReactEditor extends Component {
+  
   constructor(props) {
     super(props)
     this.state = {
@@ -63,7 +65,8 @@ export default class ReactEditor extends Component {
           emptyNodeClass: 'is-empty',
           emptyNodeText: placeholder || 'Write something …',
           showOnlyWhenEditable: true,
-        })
+        }),
+        new History()
       ],
       content: content || '',
       element: this.contentRef.current,

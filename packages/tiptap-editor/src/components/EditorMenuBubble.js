@@ -110,6 +110,13 @@ export default class EditorMenuBubble extends Component {
           />
           <button
             className="menububble__button"
+            onClick={this.setLinkUrl}
+            type="button"
+          >
+             <Icon name='check' />
+          </button>
+          <button
+            className="menububble__button"
             onClick={this.resetLinkUrl}
             type="button"
           >

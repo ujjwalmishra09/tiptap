@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Icon from './Icon'
+import { cordsAtPos } from '../Utils'
 
 export default class EditorMenuBubble extends Component {
 
@@ -11,6 +12,8 @@ export default class EditorMenuBubble extends Component {
       linkUrl: null,
       linkMenuIsActive: false,
     }
+
+    this.editor = props.getEditor()
 
     this.setLinkUrl = this.setLinkUrl.bind(this)
     this.changeValue = this.changeValue.bind(this)
@@ -25,20 +28,22 @@ export default class EditorMenuBubble extends Component {
   }
 
   showLinkMenu() {
-    const attrs = this.props.getEditor().getMarkAttrs('link')
+    const command = this.editor.commands.link
+    const attrs = this.editor.getMarkAttrs('link')
     this.setState({
       linkUrl: attrs.href,
       linkMenuIsActive: true
     }, () => {
-      if(this.linkInput) this.linkInput.current.focus()
+      if (this.linkInput) this.linkInput.current.focus()
+      command({ href: attrs.href })
     })
   }
 
-  hideLinkMenu(){
+  hideLinkMenu(cb = () => {}){
     this.setState({
       linkUrl: null,
       linkMenuIsActive: false
-    })
+    }, cb)
   }
 
   hideLinkOnEscape(e) {
@@ -46,15 +51,17 @@ export default class EditorMenuBubble extends Component {
   }
 
   setLinkUrl() {
-    const command = this.props.getEditor().commands.link
-    command({ href: this.state.linkUrl })
-    this.hideLinkMenu()
+    const command = this.editor.commands.link
+    const href = this.state.linkUrl
+
+    this.hideLinkMenu(() => command({ href }))
   }
 
   resetLinkUrl() {
-    const command = this.props.getEditor().commands.link
-    command({ href: null })
-    this.hideLinkMenu()
+    const attrs = this.editor.getMarkAttrs('link')
+    const command = this.editor.commands.link
+
+    this.hideLinkMenu(() => command({ href: attrs.href }))
   }
 
   getStyles(){
@@ -66,7 +73,7 @@ export default class EditorMenuBubble extends Component {
   }
 
   getClassNames(){
-    const isActive = this.props.getEditor().isActive
+    const isActive = this.editor.isActive
     return {
       bold: `menububble__button ${isActive.bold() ? 'is-active' : ''}`,
       italic: `menububble__button ${isActive.italic() ? 'is-active' : ''}`,
@@ -82,7 +89,7 @@ export default class EditorMenuBubble extends Component {
   }
 
   handleMenuButton(e) {
-    const editor = this.props.getEditor()
+    const editor = this.editor
     let { name: key } = e.currentTarget
 
     if (key === 'h4') editor.commands['heading']({ level: 4 })
@@ -90,7 +97,7 @@ export default class EditorMenuBubble extends Component {
   }
 
   render() {
-    const editor = this.props.getEditor()
+    const editor = this.editor
     const styles = this.getStyles()
     const classNames = this.getClassNames()
     const commands = editor.commands

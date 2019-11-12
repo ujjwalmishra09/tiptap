@@ -31,10 +31,19 @@ class Editor extends TiptapEditor {
       }))
     }
   }
+
+  destroy() {
+    if (!this.view) {
+      return
+    }
+    if (menuBubble && menuBubble.element) this.unregisterPlugin('menu_bubble')
+    this.view.destroy()
+  }
+
 }
 
 export default class ReactEditor extends Component {
-  
+
   constructor(props) {
     super(props)
     this.state = {
@@ -80,6 +89,10 @@ export default class ReactEditor extends Component {
       }
     })
     this.setState({ isEditorRedy: true })
+  }
+
+  componentWillUnmount() {
+    this.editor.destroy()
   }
 
   getStyles() {

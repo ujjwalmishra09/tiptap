@@ -36,10 +36,19 @@ class Menu {
 
       this.hide(event)
     })
+
+    this.handleOutSideClick = this.handleOutSideClick.bind(this)
+    window.document.addEventListener('click', this.handleOutSideClick)
   }
 
   handleClick() {
     this.preventHide = true
+  }
+
+  handleOutSideClick(e) {
+    if (!this.options.element.parentNode.contains(e.target)) {
+      this.hide(e);
+    }
   }
 
   update(view, lastState) {
@@ -117,6 +126,7 @@ class Menu {
 
   destroy() {
     this.options.element.removeEventListener('mousedown', this.mousedownHandler)
+    window.document.removeEventListener('click', this.handleOutSideClick)
   }
 
 }

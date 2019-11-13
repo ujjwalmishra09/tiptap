@@ -72,6 +72,12 @@ export default class EditorMenuBubble extends Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (!this.props.isActive && prevProps.isActive) {
+      this.setState({ linkUrl: null, linkMenuIsActive: false })
+    }
+  }
+
   getClassNames(){
     const isActive = this.editor.isActive
     return {

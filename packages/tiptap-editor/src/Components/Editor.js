@@ -114,7 +114,7 @@ export default class ReactEditor extends Component {
   render() {
     const styles = this.getStyles()
     const classNames = this.getClassNames()
-    const { isEditorRedy } = this.state
+    const { isEditorRedy, menu: { isActive } } = this.state
 
     return (
       <div className="tiptap__editor">
@@ -123,7 +123,13 @@ export default class ReactEditor extends Component {
           className={classNames.menububble}
           style={styles.menububble}
         >
-          {isEditorRedy && <EditorMenuBubble getEditor={()=>this.editor}/>}
+          {
+            isEditorRedy &&
+            <EditorMenuBubble
+              isActive={isActive}
+              getEditor={()=>this.editor}
+            />
+          }
         </div>
         <div ref={this.contentRef} className="tiptap__editor__content"></div>
       </div>

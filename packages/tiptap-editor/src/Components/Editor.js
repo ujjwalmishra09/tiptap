@@ -69,7 +69,7 @@ export default class ReactEditor extends Component {
         new BulletList(),
         new Link({ openOnClick: false }),
         new Bold({ tag: 'b' }),
-        new Italic(),
+        new Italic({ tag: 'i' }),
         new Placeholder({
           emptyNodeClass: 'is-empty',
           emptyNodeText: placeholder || 'Write something …',

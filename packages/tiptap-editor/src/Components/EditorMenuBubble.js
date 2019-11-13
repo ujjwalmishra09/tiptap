@@ -65,10 +65,11 @@ export default class EditorMenuBubble extends Component {
   }
 
   getStyles(){
-    const { left, right } = this.state;
+    const { linkMenuIsActive } = this.state;
 
     return {
-      parent: { left, right }
+      button: { display: linkMenuIsActive ? 'none' : 'inline-flex' },
+      form: { display: linkMenuIsActive ? 'flex' : 'none' }
     }
   }
 
@@ -102,48 +103,54 @@ export default class EditorMenuBubble extends Component {
     else editor.commands[key]()
   }
 
-  render() {
-    const editor = this.editor
+  getLinkForm() {
     const styles = this.getStyles()
-    const classNames = this.getClassNames()
-    const commands = editor.commands
-    const { linkMenuIsActive, linkUrl } = this.state;
+    const { linkUrl } = this.state
 
-    if (linkMenuIsActive) {
-      return (
-        <form className="menububble__form" onSubmit={this.setLinkUrl}>
-          <input
-            className="menububble__input"
-            type="text"
-            value={linkUrl}
-            onChange={this.changeValue}
-            placeholder="https://"
-            ref={this.linkInput}
-            onKeyDown={this.hideLinkOnEscape}
-          />
-          <button
-            className="menububble__button"
-            onClick={this.setLinkUrl}
-            type="button"
-          >
-             <Icon name='check' />
-          </button>
-          <button
-            className="menububble__button"
-            onClick={this.resetLinkUrl}
-            type="button"
-          >
-             <Icon name='times-circle' />
-          </button>
-        </form>
-      )
-    }
+    return (
+      <form
+        className="menububble__form"
+        onSubmit={this.setLinkUrl}
+        style={styles.form}
+      >
+        <input
+          className="menububble__input"
+          type="text"
+          value={linkUrl}
+          onChange={this.changeValue}
+          placeholder="https://"
+          ref={this.linkInput}
+          onKeyDown={this.hideLinkOnEscape}
+        />
+        <button
+          className="menububble__button"
+          onClick={this.setLinkUrl}
+          type="button"
+        >
+           <Icon name='check' />
+        </button>
+        <button
+          className="menububble__button"
+          onClick={this.resetLinkUrl}
+          type="button"
+        >
+           <Icon name='times-circle' />
+        </button>
+      </form>
+    )
+  }
+
+  getMenuButtons() {
+    const classNames = this.getClassNames()
+    const styles = this.getStyles()
+
     return (
       <>
         <button
           name='bold'
           className={classNames.bold}
           onClick={this.handleMenuButton}
+          style={styles.button}
         >
           <Icon name='bold' />
         </button>
@@ -151,6 +158,7 @@ export default class EditorMenuBubble extends Component {
           name='italic'
           className={classNames.italic}
           onClick={this.handleMenuButton}
+          style={styles.button}
         >
           <Icon name='italic' />
         </button>
@@ -158,6 +166,7 @@ export default class EditorMenuBubble extends Component {
           name='h4'
           className={classNames.h4}
           onClick={this.handleMenuButton}
+          style={styles.button}
         >
           <b>H4</b>
         </button>
@@ -165,6 +174,7 @@ export default class EditorMenuBubble extends Component {
           name='bullet_list'
           className={classNames.bullet_list}
           onClick={this.handleMenuButton}
+          style={styles.button}
         >
           <Icon name='list' />
         </button>
@@ -172,6 +182,7 @@ export default class EditorMenuBubble extends Component {
           name='ordered_list'
           className={classNames.ordered_list}
           onClick={this.handleMenuButton}
+          style={styles.button}
         >
           <Icon name='list-ol'/>
         </button>
@@ -180,9 +191,19 @@ export default class EditorMenuBubble extends Component {
           className="menububble__button"
           onClick={this.showLinkMenu}
           className={classNames.link}
+          style={styles.button}
         >
           <Icon name='link' />
         </button>
+      </>
+    )
+  }
+
+  render() {
+    return (
+      <>
+        {this.getMenuButtons()}
+        {this.getLinkForm()}
       </>
     )
   }

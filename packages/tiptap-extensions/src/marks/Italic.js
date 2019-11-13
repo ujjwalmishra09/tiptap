@@ -14,7 +14,7 @@ export default class Italic extends Mark {
         { tag: 'em' },
         { style: 'font-style=italic' },
       ],
-      toDOM: () => ['em', 0],
+      toDOM: () => [this.options.tag || 'em', 0],
     }
   }
 

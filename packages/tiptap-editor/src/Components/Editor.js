@@ -33,9 +33,12 @@ class Editor extends TiptapEditor {
   }
 
   destroy() {
+    const { menuBubble } = this.options
+
     if (!this.view) {
       return
     }
+
     if (menuBubble && menuBubble.element) this.unregisterPlugin('menu_bubble')
     this.view.destroy()
   }

@@ -9,7 +9,7 @@ export default class EditorMenuBubble extends Component {
     super(props)
 
     this.state = {
-      linkUrl: null,
+      linkUrl: '',
       linkMenuIsActive: false,
     }
 
@@ -22,6 +22,7 @@ export default class EditorMenuBubble extends Component {
     this.showLinkMenu = this.showLinkMenu.bind(this)
     this.hideLinkOnEscape = this.hideLinkOnEscape.bind(this)
     this.handleMenuButton = this.handleMenuButton.bind(this)
+    this.getButton = this.getButton.bind(this)
 
     this.firstButton = React.createRef()
     this.linkInput = React.createRef()
@@ -41,7 +42,7 @@ export default class EditorMenuBubble extends Component {
 
   hideLinkMenu(cb = () => {}){
     this.setState({
-      linkUrl: null,
+      linkUrl: '',
       linkMenuIsActive: false
     }, cb)
   }
@@ -64,31 +65,24 @@ export default class EditorMenuBubble extends Component {
     this.hideLinkMenu(() => command({ href: attrs.href }))
   }
 
-  getStyles(){
-    const { linkMenuIsActive } = this.state;
-
-    return {
-      button: { display: linkMenuIsActive ? 'none' : 'inline-flex' },
-      form: { display: linkMenuIsActive ? 'flex' : 'none' }
-    }
-  }
-
   componentDidUpdate(prevProps) {
     if (!this.props.isActive && prevProps.isActive) {
-      this.setState({ linkUrl: null, linkMenuIsActive: false })
+      this.setState({ linkUrl: '', linkMenuIsActive: false })
     }
   }
 
-  getClassNames(){
-    const isActive = this.editor.isActive
-    return {
-      bold: `menububble__button ${isActive.bold() ? 'is-active' : ''}`,
-      italic: `menububble__button ${isActive.italic() ? 'is-active' : ''}`,
-      link: `menububble__button ${isActive.link() ? 'is-active' : ''}`,
-      h4: `menububble__button ${isActive.heading({ level: 4 }) ? 'is-active' : ''}`,
-      bullet_list: `menububble__button ${isActive.bullet_list() ? 'is-active' : ''}`,
-      ordered_list: `menububble__button ${isActive.ordered_list() ? 'is-active' : ''}`,
+  getClassName(button){
+    let isActive = false
+
+    if (button === 'h4' || button === 'h2') {
+      isActive = this.editor.isActive['heading']({
+        level: Number(button.split('')[1])
+      })
+    } else {
+      isActive = this.editor.isActive[button]()
     }
+
+    return `menububble__button ${ isActive ? 'is-active' : ''}`
   }
 
   changeValue(e) {
@@ -100,18 +94,18 @@ export default class EditorMenuBubble extends Component {
     let { name: key } = e.currentTarget
 
     if (key === 'h4') editor.commands['heading']({ level: 4 })
+    else if (key === 'h2') editor.commands['heading']({ level: 2 })
+    else if (key == 'link') this.showLinkMenu(e)
     else editor.commands[key]()
   }
 
   getLinkForm() {
-    const styles = this.getStyles()
-    const { linkUrl } = this.state
+    const { linkUrl, linkMenuIsActive } = this.state
 
     return (
       <form
         className="menububble__form"
-        onSubmit={this.setLinkUrl}
-        style={styles.form}
+        style={{ display: linkMenuIsActive ? 'flex' : 'none' }}
       >
         <input
           className="menububble__input"
@@ -125,7 +119,7 @@ export default class EditorMenuBubble extends Component {
         <button
           className="menububble__button"
           onClick={this.setLinkUrl}
-          type="button"
+          type='button'
         >
            <Icon name='check' />
         </button>
@@ -140,61 +134,32 @@ export default class EditorMenuBubble extends Component {
     )
   }
 
-  getMenuButtons() {
-    const classNames = this.getClassNames()
-    const styles = this.getStyles()
+  getIconName(button) {
+    if (button === 'bullet_list') return 'list'
+    else if (button === 'ordered_list') return 'list-ol'
+    return button
+  }
+
+  getButton(button) {
+    const { linkMenuIsActive } = this.state
 
     return (
-      <>
-        <button
-          name='bold'
-          className={classNames.bold}
-          onClick={this.handleMenuButton}
-          style={styles.button}
-        >
-          <Icon name='bold' />
-        </button>
-        <button
-          name='italic'
-          className={classNames.italic}
-          onClick={this.handleMenuButton}
-          style={styles.button}
-        >
-          <Icon name='italic' />
-        </button>
-        <button
-          name='h4'
-          className={classNames.h4}
-          onClick={this.handleMenuButton}
-          style={styles.button}
-        >
-          <b>H4</b>
-        </button>
-        <button
-          name='bullet_list'
-          className={classNames.bullet_list}
-          onClick={this.handleMenuButton}
-          style={styles.button}
-        >
-          <Icon name='list' />
-        </button>
-        <button
-          name='ordered_list'
-          className={classNames.ordered_list}
-          onClick={this.handleMenuButton}
-          style={styles.button}
-        >
-          <Icon name='list-ol'/>
-        </button>
+      <button
+        name={button}
+        className={this.getClassName(button)}
+        onClick={this.handleMenuButton}
+        style={{ display: linkMenuIsActive ? 'none' : 'inline-flex' }}
+        key={button}
+      >
+        <Icon name={this.getIconName(button)} />
+      </button>
+    )
+  }
 
-        <button
-          className="menububble__button"
-          onClick={this.showLinkMenu}
-          className={classNames.link}
-          style={styles.button}
-        >
-          <Icon name='link' />
-        </button>
+  getMenuButtons() {
+    return (
+      <>
+        {this.props.buttons.map(this.getButton)}
       </>
     )
   }

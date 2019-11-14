@@ -58,18 +58,36 @@ export default class ReactEditor extends Component {
     this.contentRef = React.createRef()
   }
 
+  getExtensions() {
+    const buttons = this.props.buttons || []
+
+    return buttons.map((button) => {
+      switch (button) {
+        case 'h4':
+          return new Heading({ levels: [4] })
+        case 'h2':
+          return new Heading({ levels: [2] })
+        case 'ordered_list':
+          return new OrderedList()
+        case 'bullet_list':
+          return new BulletList()
+        case 'link':
+          return new Link({ openOnClick: false })
+        case 'bold':
+          return new Bold({ tag: 'b' })
+        case 'italic':
+          return new Italic({ tag: 'i' })
+      }
+    })
+  }
+
   componentDidMount() {
     const { onUpdate, placeholder, content } = this.props
 
     this.editor = new Editor({
       extensions: [
-        new Heading({ levels: [4] }),
+        ...this.getExtensions(),
         new ListItem(),
-        new OrderedList(),
-        new BulletList(),
-        new Link({ openOnClick: false }),
-        new Bold({ tag: 'b' }),
-        new Italic({ tag: 'i' }),
         new Placeholder({
           emptyNodeClass: 'is-empty',
           emptyNodeText: placeholder || 'Write something …',
@@ -88,6 +106,7 @@ export default class ReactEditor extends Component {
         if (onUpdate) onUpdate(data)
       }
     })
+
     this.setState({ isEditorRedy: true })
   }
 
@@ -105,9 +124,10 @@ export default class ReactEditor extends Component {
 
   getClassNames() {
     const { menu } = this.state
+    const { buttons } = this.props
 
     return {
-      menububble: `menububble${ menu.isActive ? ' is-active' : '' }`
+      menububble: `menububble${ buttons && menu.isActive ? ' is-active' : '' }`
     }
   }
 
@@ -115,6 +135,7 @@ export default class ReactEditor extends Component {
     const styles = this.getStyles()
     const classNames = this.getClassNames()
     const { isEditorRedy, menu: { isActive } } = this.state
+    const { buttons } = this.props
 
     return (
       <div className="tiptap__editor">
@@ -124,10 +145,12 @@ export default class ReactEditor extends Component {
           style={styles.menububble}
         >
           {
-            isEditorRedy &&
+            isEditorRedy && buttons && buttons.length
+            &&
             <EditorMenuBubble
               isActive={isActive}
               getEditor={()=>this.editor}
+              buttons={buttons}
             />
           }
         </div>
